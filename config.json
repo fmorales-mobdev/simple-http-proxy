@@ -1,0 +1,13 @@
+{
+    "port": 8082,
+    "proxy": [
+        {
+            "path": "/*",
+            "target": "http://localhost:8081"
+        },
+        {
+            "path": "/*",
+            "target": "https://facebook.com"
+        }
+    ]
+}
