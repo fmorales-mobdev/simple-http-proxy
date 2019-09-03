@@ -23,5 +23,5 @@ npm start
     ]
 }
 ```
-IE: http://localhost:8082/foo/baz -> http://localhost:8081/foo/baz
-IE: http://localhost:8082/bar/baz -> https://facebook.com/bar/baz
+* http://localhost:8082/foo/baz --> http://localhost:8081/foo/baz
+* http://localhost:8082/bar/baz --> https://facebook.com/bar/baz
