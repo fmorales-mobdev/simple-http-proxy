@@ -1,5 +1,7 @@
 const configFile = process.argv[2] ? './' + process.argv[2] : './config.json'
 const express = require('express');
+const cors = require('cors');
+
 let config = JSON.parse(require("fs").readFileSync(configFile));
 
 let httpProxy = require('http-proxy').createProxyServer({});
@@ -8,16 +10,16 @@ httpProxy.on('error', (err) => {
     console.log(err);
 });
 
-httpProxy.on("proxyRes", function (proxyRes, req, res) {
-    proxyRes.headers['access-control-allow-origin'] = '*';
-    if (req.headers['access-control-request-method']) {
-        res.setHeader('access-control-allow-methods', req.headers['access-control-request-method']);
-    }
+// httpProxy.on("proxyRes", function (proxyRes, req, res) {
+//     proxyRes.headers['access-control-allow-origin'] = '*';
+//     if (req.headers['access-control-request-method']) {
+//         res.setHeader('access-control-allow-methods', req.headers['access-control-request-method']);
+//     }
 
-    if (req.headers['access-control-request-headers']) {
-        res.setHeader('access-control-allow-headers', req.headers['access-control-request-headers']);
-    }
-});
+//     if (req.headers['access-control-request-headers']) {
+//         res.setHeader('access-control-allow-headers', req.headers['access-control-request-headers']);
+//     }
+// });
 
 function loadConfiguration() {
     config = JSON.parse(require("fs").readFileSync(configFile));
@@ -25,7 +27,10 @@ function loadConfiguration() {
 
 function createExpressApplication() {
     loadConfiguration();
+    
     let expressApp = express();
+    expressApp.use(cors());
+    
     config.mocks.forEach(mock => {
         const method = mock.method.trim().toLowerCase();
         expressApp[method](mock.path, (req, res) => {

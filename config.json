@@ -16,10 +16,14 @@
    ],
    "mocks": [
        {
-           "path": "/hola/mundo",
+           "path": "/informacion_general/indicadores_economicos",
            "method": "get",
            "responseBody": {
-                "text": "hola mundogsdf"
+                "data": {
+                  "fecha_sistema": "09 de septiembre",
+                  "valor_uf": "$28.009,33",
+                  "valor_utm": "$49.131"
+                }
            } 
        }
    ]
