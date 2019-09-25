@@ -1,13 +1,26 @@
 {
-    "port": 8082,
-    "proxy": [
-        {
-            "path": "/*",
-            "target": "http://localhost:8081"
-        },
-        {
-            "path": "/*",
-            "target": "https://facebook.com"
-        }
-    ]
+   "port": 8082,
+   "proxy": [
+       {
+           "path": "/ahorro/vida*",
+           "target": "http://localhost:8080"
+       },
+       {
+           "path": "/vida*",
+           "target": "http://localhost:8080"
+       },
+       {
+           "path": "/*",
+           "target": "https://consorcio-integracion.modyo.be"
+       }
+   ],
+   "mocks": [
+       {
+           "path": "/hola/mundo",
+           "method": "get",
+           "responseBody": {
+                "text": "hola mundogsdf"
+           } 
+       }
+   ]
 }
