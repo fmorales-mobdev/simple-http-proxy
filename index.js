@@ -10,16 +10,16 @@ httpProxy.on('error', (err) => {
     console.log(err);
 });
 
-// httpProxy.on("proxyRes", function (proxyRes, req, res) {
-//     proxyRes.headers['access-control-allow-origin'] = '*';
-//     if (req.headers['access-control-request-method']) {
-//         res.setHeader('access-control-allow-methods', req.headers['access-control-request-method']);
-//     }
+httpProxy.on("proxyRes", function (proxyRes, req, res) {
+    proxyRes.headers['access-control-allow-origin'] = '*';
+    if (req.headers['access-control-request-method']) {
+        res.setHeader('access-control-allow-methods', req.headers['access-control-request-method']);
+    }
 
-//     if (req.headers['access-control-request-headers']) {
-//         res.setHeader('access-control-allow-headers', req.headers['access-control-request-headers']);
-//     }
-// });
+    if (req.headers['access-control-request-headers']) {
+        res.setHeader('access-control-allow-headers', req.headers['access-control-request-headers']);
+    }
+});
 
 function loadConfiguration() {
     config = JSON.parse(require("fs").readFileSync(configFile));
