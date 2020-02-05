@@ -1,0 +1,16 @@
+{
+  "prettier.configPath": "prettier.config.js",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
+  "editor.tabSize": 2,
+  "output-link-to-file.languagesIds": [
+    "output-link-to-file",
+    "log",
+    "Log",
+    "code-runner-output",
+    "Jest",
+    "jest"
+  ]
+}

@@ -1,0 +1,9 @@
+[
+  {
+    "path": "/hola/mundo",
+    "method": "get",
+    "responseBody": {
+      "text": "hola mundogsdf"
+    }
+  }
+]
