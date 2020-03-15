@@ -2,14 +2,14 @@
    "proxy": [
        {
            "host": "ci.moralesm.cl",
-           "target": "https://google.cl"
+           "target": "http://localhost:8981"
        },
        {
            "host": "apps.moralesm.cl",
            "paths": [
                {
                    "path": "/files/*",
-                   "target": "https://gmail.com"
+                   "target": "http://localhost:8982"
                }
            ] 
        }
