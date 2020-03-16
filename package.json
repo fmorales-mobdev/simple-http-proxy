@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "inspect": "node --inspect-brk=0.0.0.0:9229 server.js --stagging",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Felipe Morales <felipe@moralesm.cl> (https://moralesm.cl)",

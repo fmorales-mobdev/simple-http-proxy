@@ -17,7 +17,7 @@ function createExpressApplication() {
   loadConfiguration();
 
   let expressApp = express();
-/*
+  
   config.proxy.forEach(proxy => {
     let handler = (req, res) => {
       httpProxy.web(req, res, { target: proxy.target, changeOrigin: false });
@@ -37,11 +37,7 @@ function createExpressApplication() {
     }
 
     expressApp.use(vhost(proxy.host, handler));
-  });*/
-
-  expressApp.use(vhost("ci.moralesm.cl", function(req, res) {
-	  res.send("asdf");
-  }));
+  });
   
   return expressApp;
 }
