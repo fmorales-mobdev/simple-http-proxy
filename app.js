@@ -1,8 +1,7 @@
-const configFile = process.argv[2] ? "./" + process.argv[2] : "./config.json";
 const express = require("express");
 const vhost = require("vhost");
 
-let config = JSON.parse(require("fs").readFileSync(configFile));
+let config = JSON.parse(require("fs").readFileSync("./config.json"));
 
 let httpProxy = require("http-proxy").createProxyServer({});
 
@@ -11,14 +10,14 @@ httpProxy.on("error", err => {
 });
 
 function loadConfiguration() {
-  config = JSON.parse(require("fs").readFileSync(configFile));
+  config = JSON.parse(require("fs").readFileSync("./config.json"));
 }
 
 function createExpressApplication() {
   loadConfiguration();
 
   let expressApp = express();
-
+/*
   config.proxy.forEach(proxy => {
     let handler = (req, res) => {
       httpProxy.web(req, res, { target: proxy.target, changeOrigin: false });
@@ -38,9 +37,13 @@ function createExpressApplication() {
     }
 
     expressApp.use(vhost(proxy.host, handler));
-  });
+  });*/
 
+  expressApp.use(vhost("ci.moralesm.cl", function(req, res) {
+	  res.send("asdf");
+  }));
+  
   return expressApp;
 }
 
-exports.app = createExpressApplication();
+module.exports = createExpressApplication();
