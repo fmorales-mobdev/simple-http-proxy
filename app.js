@@ -1,3 +1,5 @@
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+
 const express = require("express");
 const vhost = require("vhost");
 
@@ -20,7 +22,7 @@ function createExpressApplication() {
   
   config.proxy.forEach(proxy => {
     let handler = (req, res) => {
-      httpProxy.web(req, res, { target: proxy.target, changeOrigin: false });
+      httpProxy.web(req, res, proxy.options);
     };
 
     if (proxy.paths && proxy.paths.length > 0) {
@@ -28,10 +30,9 @@ function createExpressApplication() {
 
       proxy.paths.forEach(pathEntry => {
         expressApp.all(pathEntry.path, (req, res) => {
-          httpProxy.web(req, res, {
-            target: pathEntry.target,
-            changeOrigin: false
-          });
+          httpProxy.web(req, res,
+            pathEntry.options
+          );
         });
       });
     }

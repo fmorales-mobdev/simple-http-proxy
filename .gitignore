@@ -2,3 +2,4 @@ node_modules/
 greenlock.d/
 .idea/
 .vscode/
+config.json
