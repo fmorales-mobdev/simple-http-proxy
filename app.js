@@ -1,5 +1,3 @@
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
-
 const express = require("express");
 const vhost = require("vhost");
 
@@ -8,39 +6,41 @@ let config = JSON.parse(require("fs").readFileSync("./config.json"));
 let httpProxy = require("http-proxy").createProxyServer({});
 
 httpProxy.on("error", err => {
-  console.log(err);
+    console.log(err);
 });
 
 function loadConfiguration() {
-  config = JSON.parse(require("fs").readFileSync("./config.json"));
+    config = JSON.parse(require("fs").readFileSync("./config.json"));
 }
 
 function createExpressApplication() {
-  loadConfiguration();
+    loadConfiguration();
 
-  let expressApp = express();
-  
-  config.proxy.forEach(proxy => {
-    let handler = (req, res) => {
-      httpProxy.web(req, res, proxy.options);
-    };
+    let expressApp = express();
 
-    if (proxy.paths && proxy.paths.length > 0) {
-      handler = express.Router();
+    config.proxy.forEach(proxy => {
+        let handler = (req, res) => {
+            console.info("Incoming connection from: " + req.connection.remoteAddress);
+            httpProxy.web(req, res, proxy.options);
+        };
 
-      proxy.paths.forEach(pathEntry => {
-        expressApp.all(pathEntry.path, (req, res) => {
-          httpProxy.web(req, res,
-            pathEntry.options
-          );
-        });
-      });
-    }
+        if (proxy.paths && proxy.paths.length > 0) {
+            handler = express.Router();
 
-    expressApp.use(vhost(proxy.host, handler));
-  });
-  
-  return expressApp;
+            proxy.paths.forEach(pathEntry => {
+                expressApp.all(pathEntry.path, (req, res) => {
+                    console.info("Incoming connection from: " + req.connection.remoteAddress);
+                    httpProxy.web(req, res,
+                        pathEntry.options
+                    );
+                });
+            });
+        }
+
+        expressApp.use(vhost(proxy.host, handler));
+    });
+
+    return expressApp;
 }
 
 module.exports = createExpressApplication();
