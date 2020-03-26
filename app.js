@@ -20,6 +20,7 @@ function createExpressApplication() {
   
   config.proxy.forEach(proxy => {
     let handler = (req, res) => {
+		console.info("Incoming connection from: " + req.connection.remoteAddress);
       httpProxy.web(req, res, { target: proxy.target, changeOrigin: false });
     };
 
@@ -28,6 +29,7 @@ function createExpressApplication() {
 
       proxy.paths.forEach(pathEntry => {
         expressApp.all(pathEntry.path, (req, res) => {
+			console.info("Incoming connection from: " + req.connection.remoteAddress);
           httpProxy.web(req, res, {
             target: pathEntry.target,
             changeOrigin: false
@@ -42,4 +44,11 @@ function createExpressApplication() {
   return expressApp;
 }
 
-module.exports = createExpressApplication();
+app = createExpressApplication();
+
+if (require.main === module) {
+	app.listen(80);
+}
+
+
+module.exports = app;
